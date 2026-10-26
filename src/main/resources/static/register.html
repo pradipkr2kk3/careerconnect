@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create account - CareerConnect</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Career<span>Connect</span></a>
+    <nav><a class="btn ghost" href="/login.html">Log in</a></nav>
+  </header>
+
+  <div class="auth">
+    <h2>Create your account</h2>
+    <div class="seg">
+      <button type="button" class="on" data-kind="user">Job seeker</button>
+      <button type="button" data-kind="company">Recruiter</button>
+    </div>
+
+    <form id="userForm" class="card">
+      <div class="field"><label for="uName">Full name</label><input id="uName" required></div>
+      <div class="field"><label for="uEmail">Email</label><input id="uEmail" type="email" required autocomplete="username"></div>
+      <div class="field"><label for="uPass">Password (6+ characters)</label><input id="uPass" type="password" minlength="6" required autocomplete="new-password"></div>
+      <div class="field"><label for="uAddr">Address</label><input id="uAddr" placeholder="City, State"></div>
+      <p class="err" id="uErr"></p>
+      <button class="btn" type="submit">Create job seeker account</button>
+    </form>
+
+    <form id="companyForm" class="card" hidden>
+      <div class="field"><label for="cName">Company name</label><input id="cName" required></div>
+      <div class="cols">
+        <div class="field"><label for="cType">Company type</label><input id="cType" placeholder="IT, Finance, Retail..."></div>
+        <div class="field"><label for="cLoc">Location</label><input id="cLoc" placeholder="Pune, Maharashtra"></div>
+      </div>
+      <div class="cols">
+        <div class="field"><label for="cEmail">Company email</label><input id="cEmail" type="email" required autocomplete="username"></div>
+        <div class="field"><label for="cContact">Contact number</label><input id="cContact"></div>
+      </div>
+      <div class="field"><label for="cPass">Password (6+ characters)</label><input id="cPass" type="password" minlength="6" required autocomplete="new-password"></div>
+      <p class="err" id="cErr"></p>
+      <button class="btn" type="submit">Create recruiter account</button>
+    </form>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script>
+    function pick(kind) {
+      $$('.seg button').forEach(b => b.classList.toggle('on', b.dataset.kind === kind));
+      $('#userForm').hidden = kind !== 'user';
+      $('#companyForm').hidden = kind !== 'company';
+    }
+    $$('.seg button').forEach(b => b.onclick = () => pick(b.dataset.kind));
+    if (location.hash === '#recruiter') pick('company');
+
+    $('#userForm').onsubmit = async e => {
+      e.preventDefault(); $('#uErr').textContent = '';
+      try {
+        await api('/auth/register', 'POST', { userName: $('#uName').value, email: $('#uEmail').value, password: $('#uPass').value, address: $('#uAddr').value });
+        location.href = '/seeker.html';
+      } catch (ex) { $('#uErr').textContent = ex.message; }
+    };
+
+    $('#companyForm').onsubmit = async e => {
+      e.preventDefault(); $('#cErr').textContent = '';
+      try {
+        await api('/auth/company/register', 'POST', {
+          companyName: $('#cName').value, companyType: $('#cType').value, companyLocation: $('#cLoc').value,
+          companyEmail: $('#cEmail').value, companyContact: $('#cContact').value, password: $('#cPass').value });
+        location.href = '/recruiter.html';
+      } catch (ex) { $('#cErr').textContent = ex.message; }
+    };
+  </script>
+</body>
+</html>

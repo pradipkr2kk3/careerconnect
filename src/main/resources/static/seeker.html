@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My CareerConnect</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/seeker.html">Career<span>Connect</span></a>
+    <nav><span class="who" id="who"></span><button class="btn ghost small" onclick="logout()">Log out</button></nav>
+  </header>
+
+  <div class="shell">
+    <aside class="side">
+      <button data-view="dashboard">Dashboard</button>
+      <button data-view="jobs">Find jobs</button>
+      <button data-view="applications">My applications</button>
+      <button data-view="education">Education</button>
+      <button data-view="skills">Skills</button>
+      <button data-view="experience">Experience</button>
+      <button data-view="feed">Community feed</button>
+    </aside>
+
+    <main>
+      <section class="view" id="view-dashboard"><h2>Dashboard</h2><div id="dash"></div></section>
+
+      <section class="view" id="view-jobs">
+        <h2>Find jobs</h2>
+        <form class="searchbar" id="jobSearch">
+          <input id="q" placeholder="Search by title, skill, company or city" aria-label="Search jobs">
+          <button class="btn" type="submit">Search</button>
+        </form>
+        <div id="jobList"></div>
+      </section>
+
+      <section class="view" id="view-applications"><h2>My applications</h2><div id="appList"></div></section>
+
+      <section class="view" id="view-education">
+        <h2>Education</h2>
+        <form class="card" id="eduForm">
+          <div class="cols">
+            <div class="field"><label for="eInst">Institute</label><input id="eInst" required></div>
+            <div class="field"><label for="eDeg">Degree</label><input id="eDeg" placeholder="B.Sc. Computer Science"></div>
+          </div>
+          <div class="cols">
+            <div class="field"><label for="eStart">Start year</label><input id="eStart" type="number" min="1950" max="2100"></div>
+            <div class="field"><label for="eEnd">End year</label><input id="eEnd" type="number" min="1950" max="2100"></div>
+            <div class="field"><label for="eGrade">Grade</label><input id="eGrade" placeholder="8.5 CGPA"></div>
+          </div>
+          <button class="btn" type="submit">Add education</button>
+        </form>
+        <div id="eduList"></div>
+      </section>
+
+      <section class="view" id="view-skills">
+        <h2>Skills</h2>
+        <form class="card" id="skillForm">
+          <div class="cols">
+            <div class="field"><label for="sSkill">Skill</label><select id="sSkill" required></select></div>
+            <div class="field"><label for="sLevel">Proficiency</label>
+              <select id="sLevel"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option><option>Expert</option></select></div>
+            <div class="field"><label for="sYears">Years of experience</label><input id="sYears" type="number" min="0" max="50" value="1"></div>
+          </div>
+          <button class="btn" type="submit">Save skill</button>
+        </form>
+        <form class="card tight" id="newSkillForm">
+          <h3>Can't find your skill? Add it to the list</h3>
+          <div class="cols">
+            <div class="field"><label for="nsName">Skill name</label><input id="nsName" required></div>
+            <div class="field"><label for="nsCat">Category</label><input id="nsCat" placeholder="Programming, Design..."></div>
+          </div>
+          <button class="btn ghost small" type="submit">Add to list</button>
+        </form>
+        <div id="skillList"></div>
+      </section>
+
+      <section class="view" id="view-experience">
+        <h2>Experience</h2>
+        <form class="card" id="expForm">
+          <div class="cols">
+            <div class="field"><label for="xCompany">Company on CareerConnect</label><select id="xCompany"></select></div>
+            <div class="field"><label for="xCompanyName">Or type the company name</label><input id="xCompanyName"></div>
+          </div>
+          <div class="field"><label for="xDesig">Designation</label><input id="xDesig" required></div>
+          <div class="field"><label for="xDesc">What did you do?</label><textarea id="xDesc"></textarea></div>
+          <div class="cols">
+            <div class="field"><label for="xFrom">Joining date</label><input id="xFrom" type="date"></div>
+            <div class="field"><label for="xTo">End date (empty if current)</label><input id="xTo" type="date"></div>
+          </div>
+          <button class="btn" type="submit">Add experience</button>
+        </form>
+        <div id="expList"></div>
+      </section>
+
+      <section class="view" id="view-feed">
+        <h2>Community feed</h2>
+        <form class="card" id="postForm">
+          <div class="field"><label for="pText">Share an update</label><textarea id="pText" required placeholder="Finished a course, got an interview, or have a tip to share?"></textarea></div>
+          <div class="cols"><div class="field"><label for="pLoc">Location (optional)</label><input id="pLoc"></div></div>
+          <button class="btn" type="submit">Publish post</button>
+        </form>
+        <div id="posts"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/seeker.js"></script>
+</body>
+</html>

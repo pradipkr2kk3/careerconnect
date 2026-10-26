@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recruiter - CareerConnect</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/recruiter.html">Career<span>Connect</span></a>
+    <nav><span class="who" id="who"></span><button class="btn ghost small" onclick="logout()">Log out</button></nav>
+  </header>
+
+  <div class="shell">
+    <aside class="side">
+      <button data-view="dashboard">Dashboard</button>
+      <button data-view="post">Post a job</button>
+      <button data-view="jobs">My jobs</button>
+      <button data-view="applications">Applications</button>
+    </aside>
+
+    <main>
+      <section class="view" id="view-dashboard"><h2>Dashboard</h2><div id="dash"></div></section>
+
+      <section class="view" id="view-post">
+        <h2>Post a job</h2>
+        <form class="card" id="jobForm">
+          <div class="field"><label for="jTitle">Job title</label><input id="jTitle" required placeholder="Java Developer"></div>
+          <div class="cols">
+            <div class="field"><label for="jRole">Role</label><input id="jRole" placeholder="Backend, Full-time"></div>
+            <div class="field"><label for="jSalary">Salary per year</label><input id="jSalary" type="number" min="0" step="1000"></div>
+          </div>
+          <div class="field"><label for="jSkills">Skills required (comma separated)</label><input id="jSkills" placeholder="Java, Spring Boot, SQL"></div>
+          <div class="field"><label for="jDesc">Job description</label><textarea id="jDesc" required></textarea></div>
+          <button class="btn" type="submit">Publish job</button>
+        </form>
+      </section>
+
+      <section class="view" id="view-jobs"><h2>My jobs</h2><div id="jobList"></div></section>
+      <section class="view" id="view-applications"><h2>Applications</h2><div id="appList"></div></section>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/recruiter.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in - CareerConnect</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Career<span>Connect</span></a>
+    <nav><a class="btn ghost" href="/register.html">Create account</a></nav>
+  </header>
+
+  <div class="auth">
+    <h2>Log in</h2>
+    <div class="seg" role="tablist">
+      <button type="button" class="on" data-kind="user">Job seeker</button>
+      <button type="button" data-kind="company">Recruiter</button>
+      <button type="button" data-kind="admin">Admin</button>
+    </div>
+    <form id="form" class="card">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" required autocomplete="username"></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" required autocomplete="current-password"></div>
+      <p class="err" id="err"></p>
+      <button class="btn" type="submit">Log in</button>
+    </form>
+    <p class="muted">New here? <a href="/register.html">Create an account</a></p>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script>
+    let kind = 'user';
+    const home = { JOB_SEEKER: '/seeker.html', RECRUITER: '/recruiter.html', ADMIN: '/admin.html' };
+
+    $$('.seg button').forEach(b => b.onclick = () => {
+      kind = b.dataset.kind;
+      $$('.seg button').forEach(x => x.classList.toggle('on', x === b));
+      $('#err').textContent = '';
+    });
+
+    $('#form').onsubmit = async e => {
+      e.preventDefault();
+      $('#err').textContent = '';
+      try {
+        const path = kind === 'company' ? '/auth/company/login' : '/auth/login';
+        const r = await api(path, 'POST', { email: $('#email').value, password: $('#password').value });
+        location.href = home[r.role];
+      } catch (ex) { $('#err').textContent = ex.message; }
+    };
+  </script>
+</body>
+</html>
